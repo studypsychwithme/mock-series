@@ -1,49 +1,1168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mind and Heart Growth - Mock Series</title>
-    <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            padding: 50px;
-            background-color: #f5f5f5;
-        }
-        .box {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 60%;
-            margin: auto;
-        }
-        button {
-            padding: 15px 25px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundational Psychology Mock Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a1a2e;
+    --navy-light: #2d2d50;
+    --accent: #4f46e5;
+    --accent-light: #818cf8;
+    --gold: #f59e0b;
+    --gold-light: #fef3c7;
+    --surface: #f8f8fc;
+    --surface2: #eeeef8;
+    --border: #d1d1e8;
+    --text: #1a1a2e;
+    --text-muted: #6b6b8a;
+    --correct: #059669;
+    --correct-bg: #d1fae5;
+    --wrong: #dc2626;
+    --wrong-bg: #fee2e2;
+    --unanswered: #d97706;
+    --unanswered-bg: #fef3c7;
+    --white: #ffffff;
+    --shadow: 0 2px 12px rgba(26,26,46,0.10);
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── WELCOME ── */
+  #welcome {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+    padding: 2rem;
+  }
+  .welcome-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  }
+  .welcome-badge {
+    display: inline-block;
+    background: var(--gold-light);
+    color: #92400e;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+  }
+  .welcome-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+  .welcome-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+  .meta-item {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 14px 8px;
+    border: 1px solid var(--border);
+  }
+  .meta-value {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+  }
+  .meta-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .start-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .start-btn:hover { background: var(--navy-light); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .instruction-list {
+    text-align: left;
+    margin-bottom: 2rem;
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+  }
+  .instruction-list p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .instruction-list p::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 2px;
+  }
+
+  /* ── TEST LAYOUT ── */
+  #test { display: none; min-height: 100vh; }
+  .test-header {
+    background: var(--navy);
+    color: white;
+    padding: 0 1.5rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-title { font-family: 'Crimson Pro', serif; font-size: 1.1rem; color: white; font-weight: 600; }
+  .timer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 1px;
+  }
+  .timer.warning { background: rgba(245,158,11,0.25); color: #fbbf24; }
+  .timer.danger { background: rgba(220,38,38,0.25); color: #f87171; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+  .timer-icon { font-size: 14px; }
+  .progress-bar-wrap { height: 3px; background: var(--border); }
+  .progress-bar { height: 3px; background: var(--accent); transition: width 0.3s; }
+
+  .test-body {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 0;
+    min-height: calc(100vh - 59px);
+  }
+  @media (max-width: 768px) {
+    .test-body { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+  }
+
+  .main-panel { padding: 2rem 2.5rem; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .q-counter {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .q-counter span { font-weight: 600; color: var(--text); }
+  .q-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.18rem;
+    line-height: 1.65;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+  .q-num {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 8px;
+    font-family: 'DM Sans', sans-serif;
+    flex-shrink: 0;
+  }
+  .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .option-item {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--white);
+  }
+  .option-item:hover { border-color: var(--accent); background: #f5f5ff; }
+  .option-item.selected { border-color: var(--accent); background: #eef2ff; }
+  .option-item label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .option-item input[type="radio"] { display: none; }
+  .opt-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    background: white;
+  }
+  .option-item.selected .opt-letter { background: var(--accent); border-color: var(--accent); color: white; }
+
+  /* Match the following */
+  .match-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+  .match-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.2rem;
+    font-size: 14px;
+  }
+  .match-table th {
+    background: var(--navy);
+    color: white;
+    padding: 9px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .match-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .match-table tr:nth-child(even) td { background: var(--surface); }
+
+  .nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1.5px solid transparent;
+  }
+  .btn-outline { background: white; border-color: var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-primary { background: var(--navy); color: white; }
+  .btn-primary:hover { background: var(--navy-light); }
+  .btn-danger { background: #dc2626; color: white; margin-left: auto; }
+  .btn-danger:hover { background: #b91c1c; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--white);
+    border-left: 1px solid var(--border);
+    padding: 1.5rem;
+    overflow-y: auto;
+    height: calc(100vh - 59px);
+    position: sticky;
+    top: 59px;
+  }
+  .sidebar-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+  .q-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 1.5rem; }
+  .q-dot {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .q-dot:hover { border-color: var(--accent); color: var(--accent); }
+  .q-dot.answered { background: var(--accent); border-color: var(--accent); color: white; }
+  .q-dot.current { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 0 2px var(--gold-light); }
+  .q-dot.answered.current { background: var(--accent); border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-light); }
+  .legend { display: flex; flex-direction: column; gap: 8px; margin-top: 1.2rem; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+  .legend-dot.answered { background: var(--accent); }
+  .legend-dot.not-answered { background: white; border: 1.5px solid var(--border); }
+  .legend-dot.current { background: white; border: 1.5px solid var(--gold); }
+  .stats-mini { background: var(--surface); border-radius: 10px; padding: 12px; margin-top: 1.2rem; }
+  .stats-mini-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; }
+  .stats-mini-row span:last-child { font-weight: 600; color: var(--accent); }
+
+  /* RESULTS */
+  #results { display: none; min-height: 100vh; background: var(--surface); padding: 2rem; }
+  .results-wrap { max-width: 800px; margin: 0 auto; }
+  .results-hero {
+    background: var(--navy);
+    color: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .results-hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(79,70,229,0.15);
+  }
+  .result-badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .badge-excellent { background: #d1fae5; color: #065f46; }
+  .badge-good { background: #dbeafe; color: #1e40af; }
+  .badge-average { background: #fef3c7; color: #92400e; }
+  .badge-poor { background: #fee2e2; color: #991b1b; }
+  .score-big {
+    font-family: 'Crimson Pro', serif;
+    font-size: 4rem;
+    font-weight: 600;
+    color: white;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .score-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 1.5rem; }
+  .score-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .score-item { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 12px; }
+  .score-item-val { font-size: 1.5rem; font-weight: 600; }
+  .score-item-lbl { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .score-item-val.green { color: #34d399; }
+  .score-item-val.red { color: #f87171; }
+  .score-item-val.yellow { color: #fbbf24; }
+
+  .section-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .section-card-header {
+    background: var(--surface2);
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+  }
+  .review-list { padding: 0; }
+  .review-item {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 12px;
+    align-items: start;
+  }
+  .review-item:last-child { border-bottom: none; }
+  .review-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .review-num.correct-bg { background: var(--correct-bg); color: var(--correct); }
+  .review-num.wrong-bg { background: var(--wrong-bg); color: var(--wrong); }
+  .review-num.skip-bg { background: var(--unanswered-bg); color: var(--unanswered); }
+  .review-q { font-size: 13.5px; line-height: 1.55; color: var(--text); font-family: 'Crimson Pro', serif; }
+  .review-answers { font-size: 12px; margin-top: 6px; line-height: 1.6; }
+  .review-answers .your-ans { color: var(--wrong); }
+  .review-answers .your-ans.correct { color: var(--correct); }
+  .review-answers .correct-ans { color: var(--correct); font-weight: 600; }
+  .review-answers .skipped { color: var(--unanswered); }
+  .review-just { font-size: 12px; color: var(--text-muted); margin-top: 5px; padding: 8px 12px; background: var(--surface); border-radius: 6px; border-left: 3px solid var(--accent); line-height: 1.6; }
+  .status-icon { font-size: 18px; margin-top: 4px; }
+
+  .retry-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.2s;
+  }
+  .retry-btn:hover { background: var(--navy-light); }
+
+  .submit-confirm {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .submit-confirm.active { display: flex; }
+  .confirm-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .confirm-card h3 { font-family: 'Crimson Pro', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .confirm-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+  .confirm-btns { display: flex; gap: 10px; }
+  .confirm-btns .btn { flex: 1; justify-content: center; text-align: center; }
+</style>
 </head>
 <body>
 
-<div class="box">
-    <h1>NIMHANS & CIP Mock Series</h1>
-    <p>Prepare smart. Practice better. Perform best.</p>
-
-    <h3>What You Get:</h3>
-    <p>✔ High-quality mock tests<br>
-       ✔ Detailed evaluation<br>
-       ✔ Notes after tests</p>
-
-    <br>
-
-    <button onclick="window.location.href='https://claude.ai/public/artifacts/04d6b537-7c5d-4b1e-a3cb-22238d5058e1'">
-        Register Now
-    </button>
+<!-- ══ WELCOME SCREEN ══ -->
+<div id="welcome">
+  <div class="welcome-card">
+    <div class="welcome-badge">MPhil Clinical Psychology Entrance</div>
+    <h1 class="welcome-title">Foundational Psychology<br>Mock Test</h1>
+    <p class="welcome-sub">Reference: Ciccarelli &amp; White — <em>Psychology</em><br>Calibrated to NIMHANS / CIP entrance difficulty</p>
+    <div class="meta-grid">
+      <div class="meta-item"><span class="meta-value">50</span><span class="meta-label">Questions</span></div>
+      <div class="meta-item"><span class="meta-value">60</span><span class="meta-label">Minutes</span></div>
+      <div class="meta-item"><span class="meta-value">50</span><span class="meta-label">Marks</span></div>
+    </div>
+    <div class="instruction-list">
+      <p>Each question carries 1 mark. No negative marking.</p>
+      <p>You can navigate freely between questions using the panel on the right.</p>
+      <p>Questions 48–50 are Match the Following (Section B).</p>
+      <p>Submit only when you are fully ready. Timer counts down from 60 minutes.</p>
+      <p>A detailed answer review with justifications is shown after submission.</p>
+    </div>
+    <button class="start-btn" onclick="startTest()">Begin Test →</button>
+  </div>
 </div>
 
+<!-- ══ TEST SCREEN ══ -->
+<div id="test">
+  <div class="test-header">
+    <div class="header-left">
+      <div class="header-title">Psychology Mock Test</div>
+    </div>
+    <div class="timer" id="timer">⏱ 60:00</div>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:2%"></div></div>
+  <div class="test-body">
+    <div class="main-panel" id="mainPanel"></div>
+    <div class="sidebar">
+      <div class="sidebar-title">Question Navigator</div>
+      <div class="q-grid" id="qGrid"></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot answered"></div>Answered</div>
+        <div class="legend-item"><div class="legend-dot not-answered"></div>Not answered</div>
+        <div class="legend-item"><div class="legend-dot current"></div>Current</div>
+      </div>
+      <div class="stats-mini">
+        <div class="stats-mini-row"><span>Answered</span><span id="sAnswered">0</span></div>
+        <div class="stats-mini-row"><span>Remaining</span><span id="sRemaining">50</span></div>
+        <div class="stats-mini-row"><span>Section B</span><span>Q48–50</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SUBMIT CONFIRM ══ -->
+<div class="submit-confirm" id="confirmModal">
+  <div class="confirm-card">
+    <h3>Submit Test?</h3>
+    <p id="confirmMsg">Are you sure you want to submit? You can still review unanswered questions.</p>
+    <div class="confirm-btns">
+      <button class="btn btn-outline" onclick="closeConfirm()">Go Back</button>
+      <button class="btn btn-danger" onclick="finalSubmit()">Submit Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULTS SCREEN ══ -->
+<div id="results">
+  <div class="results-wrap" id="resultsWrap"></div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    id:1, section:'A',
+    text:"The resting potential of a neuron is maintained primarily by:",
+    opts:["Sodium-potassium pump actively transporting ions","Calcium channels opening during hyperpolarization","Acetylcholine binding to postsynaptic receptors","GABA inhibiting action potential propagation"],
+    answer:0,
+    just:"The sodium-potassium pump maintains resting potential (~-70mV) by pumping 3 Na+ out and 2 K+ in, keeping inside negative."
+  },
+  {
+    id:2,section:'A',
+    text:"A patient sustains damage to the reticular formation. Which of the following consequences is MOST likely?",
+    opts:["Loss of ability to form new declarative memories","Impaired arousal and difficulty maintaining wakefulness","Loss of motor coordination and balance","Inability to regulate emotional responses"],
+    answer:1,
+    just:"The reticular formation regulates arousal and wakefulness. Damage disrupts consciousness and sleep-wake cycles."
+  },
+  {
+    id:3,section:'A',
+    text:"Which neurotransmitter is most associated with the reward pathway and is implicated in drug addiction?",
+    opts:["Serotonin","Acetylcholine","Dopamine","Norepinephrine"],
+    answer:2,
+    just:"Dopamine is central to the mesolimbic reward pathway. Most addictive drugs increase dopamine in this system."
+  },
+  {
+    id:4,section:'A',
+    text:"Split-brain research by Sperry and Gazzaniga demonstrated that:",
+    opts:["The right hemisphere is dominant for language production in most right-handed individuals","The corpus callosum is necessary for integrating information across hemispheres","The left hemisphere controls creative and spatial tasks","Severing the corpus callosum permanently abolishes all communication between hemispheres"],
+    answer:1,
+    just:"Sperry's research showed the corpus callosum integrates information between hemispheres; without it, they operate independently."
+  },
+  {
+    id:5,section:'A',
+    text:"According to signal detection theory, a person who sets a very conservative criterion (high threshold) will show:",
+    opts:["High hits and high false alarms","Low misses and high correct rejections","Low hits and low false alarms","High sensitivity (d') regardless of criterion"],
+    answer:2,
+    just:"Conservative criterion (high threshold to say 'yes') produces low hits AND low false alarms. Sensitivity (d') is independent of criterion."
+  },
+  {
+    id:6,section:'A',
+    text:"The phi phenomenon, as described in Gestalt psychology, refers to:",
+    opts:["The tendency to perceive incomplete figures as whole","The illusion of motion created by rapidly presented stationary stimuli","Perceptual constancy in changing illumination conditions","Depth perception using monocular cues"],
+    answer:1,
+    just:"Phi phenomenon = illusion of movement from sequential static stimuli (e.g., cinema frames). A core Gestalt principle."
+  },
+  {
+    id:7,section:'A',
+    text:"Gate control theory of pain (Melzack & Wall) proposes that:",
+    opts:["Pain signals are transmitted exclusively via C-fibers in the spinal cord","A neural 'gate' in the spinal cord can modulate pain signals before they reach the brain","The thalamus acts as the final gate determining pain perception","Endorphins block pain by acting on the peripheral nervous system"],
+    answer:1,
+    just:"Gate control theory: a neural gate in the spinal cord's dorsal horn (substantia gelatinosa) modulates pain signals before ascending to the brain."
+  },
+  {
+    id:8,section:'A',
+    text:"During Stage 3 NREM sleep, which of the following EEG patterns is characteristic?",
+    opts:["Alpha waves with sleep spindles","Predominantly delta waves (slow-wave sleep)","Beta waves resembling wakefulness","Theta waves with K-complexes"],
+    answer:1,
+    just:"Stage 3 NREM (slow-wave sleep) is defined by predominantly delta waves — high amplitude, low frequency."
+  },
+  {
+    id:9,section:'A',
+    text:"Which theory of dreaming proposes that dreams represent the brain's attempt to make sense of random neural activity during REM sleep?",
+    opts:["Freud's wish-fulfillment theory","Cognitive theory of dreaming (Hobson)","Activation-synthesis hypothesis","Continuity hypothesis of dreaming"],
+    answer:2,
+    just:"The activation-synthesis hypothesis (Hobson & McCarley) proposes dreams are the cortex's interpretation of random neural firing during REM. Do not confuse with cognitive theory."
+  },
+  {
+    id:10,section:'A',
+    text:"Hilgard's neodissociation theory of hypnosis suggests that:",
+    opts:["Hypnosis is merely a form of deep relaxation with no altered state","A 'hidden observer' represents a part of consciousness monitoring experience outside hypnotic awareness","All hypnotic phenomena can be explained by social role-playing","Hypnosis induces a qualitatively distinct neurological state unlike any other"],
+    answer:1,
+    just:"Hilgard's neodissociation theory: a 'hidden observer' operates at a deeper level of consciousness outside hypnotic awareness, implying divided consciousness."
+  },
+  {
+    id:11,section:'A',
+    text:"In Pavlov's experiments, stimulus generalization refers to:",
+    opts:["The CR being elicited only by the original CS and no other stimulus","The CR being elicited by stimuli similar to but not identical to the original CS","The gradual disappearance of the CR when the CS is presented without the UCS","A previously extinguished CR reappearing after a rest period"],
+    answer:1,
+    just:"Stimulus generalization = CR occurs to stimuli similar to (but not identical to) the original CS. Option C = extinction; Option D = spontaneous recovery."
+  },
+  {
+    id:12,section:'A',
+    text:"A rat is rewarded with food after pressing a lever, but only after unpredictable intervals of time. This is an example of which reinforcement schedule?",
+    opts:["Fixed ratio — rapid responding with post-reinforcement pause","Variable ratio — high, steady rate of responding","Variable interval — moderate, steady rate with no post-reinforcement pause","Fixed interval — slow responding that accelerates near reinforcement time"],
+    answer:2,
+    just:"Variable interval schedule = rewards after unpredictable time intervals → moderate, steady responding. Variable ratio produces the highest rate."
+  },
+  {
+    id:13,section:'A',
+    text:"Tolman's latent learning experiments with rats in mazes demonstrated that:",
+    opts:["Learning requires immediate reinforcement to be retained","Cognitive maps can be formed without any reinforcement","Operant conditioning is superior to classical conditioning for spatial learning","Insight learning is the primary mechanism for maze navigation"],
+    answer:1,
+    just:"Tolman showed rats formed cognitive maps without reinforcement — learning is latent until motivation is present."
+  },
+  {
+    id:14,section:'A',
+    text:"In Bandura's Bobo doll experiments, which condition most clearly demonstrated that learning can occur WITHOUT performance?",
+    opts:["Children rewarded for aggression imitated it most","Children who saw model punished showed less aggression but imitated fully when offered rewards","Children who observed no model showed spontaneous aggression","Children imitated aggression only when the model was of the same gender"],
+    answer:1,
+    just:"The punishment condition demonstrated acquisition without performance — children learned but only performed when incentivized."
+  },
+  {
+    id:15,section:'A',
+    text:"According to the Atkinson-Shiffrin model of memory, information moves from sensory memory to short-term memory through:",
+    opts:["Elaborative rehearsal","Selective attention","Chunking","Encoding specificity"],
+    answer:1,
+    just:"Selective attention determines what moves from sensory store to STM. Without attention, information decays rapidly from sensory memory."
+  },
+  {
+    id:16,section:'A',
+    text:"Proactive interference differs from retroactive interference in that:",
+    opts:["Proactive interference involves new learning disrupting recall of old material","Proactive interference involves old learning disrupting recall of new material","Retroactive interference increases with sleep between learning and recall","Both types equally affect procedural memory"],
+    answer:1,
+    just:"Proactive = OLD learning interferes with recall of NEW material. Retroactive = NEW learning interferes with recall of OLD material. A classic exam confusion point."
+  },
+  {
+    id:17,section:'A',
+    text:"Which of the following statements is CORRECT regarding the mechanisms of the serial position effect?",
+    opts:["Both primacy and recency effects are explained by long-term memory consolidation","Primacy reflects better encoding into LTM through rehearsal; recency reflects items still in STM","Recency reflects better encoding; primacy reflects items still active in STM","Both are exclusively a function of semantic encoding depth"],
+    answer:1,
+    just:"Primacy = early items rehearsed into LTM. Recency = last items still held in active STM at time of recall. Classic serial position explanation."
+  },
+  {
+    id:18,section:'A',
+    text:"Chomsky's concept of Language Acquisition Device (LAD) implies:",
+    opts:["Language is learned entirely through operant conditioning and imitation","Children are born with an innate capacity for understanding universal grammatical rules","Language acquisition is culture-specific and has no biological basis","The critical period for language ends at age 5"],
+    answer:1,
+    just:"Chomsky's LAD: children are biologically pre-wired to acquire universal grammatical structure — not learned through reinforcement alone."
+  },
+  {
+    id:19,section:'A',
+    text:"A chess player who always applies the same opening strategy regardless of the opponent's style is demonstrating:",
+    opts:["Functional fixedness","Mental set (Einstellung effect)","Confirmation bias","Availability heuristic"],
+    answer:1,
+    just:"Mental set (Einstellung effect) = applying a previously successful strategy even when it is suboptimal. Functional fixedness = inability to use objects in new ways."
+  },
+  {
+    id:20,section:'A',
+    text:"Tversky and Kahneman's representativeness heuristic leads to errors because it:",
+    opts:["Relies too heavily on how easily an example comes to mind","Ignores base rate information in favour of similarity to a prototype","Overestimates the probability of vivid or recent events","Leads to anchoring on an initial piece of information"],
+    answer:1,
+    just:"Representativeness heuristic = judging probability by prototype similarity while ignoring base rates. Availability heuristic = ease of recall from memory."
+  },
+  {
+    id:21,section:'A',
+    text:"A child is shown two equal balls of clay; one is rolled into a sausage. The child insists the sausage has more clay. This child is in Piaget's:",
+    opts:["Sensorimotor stage","Preoperational stage","Concrete operational stage","Formal operational stage"],
+    answer:1,
+    just:"Failure to understand conservation of quantity is a hallmark of the preoperational stage (ages 2–7). Conservation is mastered in concrete operations."
+  },
+  {
+    id:22,section:'A',
+    text:"Vygotsky's Zone of Proximal Development (ZPD) is best defined as:",
+    opts:["The range of tasks a child can complete entirely independently","The difference between what a child can achieve alone and with guided assistance","The developmental lag between biological maturity and cognitive readiness","The optimal period for acquiring language without formal instruction"],
+    answer:1,
+    just:"ZPD = gap between independent performance and performance with expert guidance/scaffolding. Vygotsky's central contribution."
+  },
+  {
+    id:23,section:'A',
+    text:"In Ainsworth's Strange Situation, an anxious-ambivalent (resistant) infant typically shows:",
+    opts:["Little distress on separation; ignores caregiver on reunion","High distress on separation; is not easily comforted on reunion and may show anger","Organised, predictable distress quickly soothed on reunion","Disoriented behaviour with no consistent pattern"],
+    answer:1,
+    just:"Anxious-ambivalent = high distress on separation + seeks comfort but resists it on reunion. Option A = avoidant; Option D = disorganised."
+  },
+  {
+    id:24,section:'A',
+    text:"According to Erikson's psychosocial theory, failure to resolve the crisis of Industry vs. Inferiority most likely results in:",
+    opts:["Role confusion and inability to commit to an identity","Feelings of guilt about initiative and curiosity","A sense of inadequacy and lack of competence in skills","Difficulty forming intimate relationships in adulthood"],
+    answer:2,
+    just:"Industry vs. Inferiority (ages 6–12): failure = feelings of inadequacy about competence in skills. Stage 5 failure = role confusion (adolescence)."
+  },
+  {
+    id:25,section:'A',
+    text:"Kohlberg's postconventional level of moral reasoning is characterized by:",
+    opts:["Following rules to avoid punishment","Adhering to social contracts and universal ethical principles","Maintaining social order by obeying authority","Acting to gain approval from peers and family"],
+    answer:1,
+    just:"Postconventional = social contracts + universal ethical principles (Stages 5 & 6). Stage 4 (law and order) is conventional — a very common exam trap."
+  },
+  {
+    id:26,section:'A',
+    text:"According to Maslow's hierarchy of needs, the concept of deficiency motivation applies to:",
+    opts:["Only physiological needs","All needs below self-actualization","Cognitive and aesthetic needs exclusively","Only safety and love/belonging needs"],
+    answer:1,
+    just:"Maslow: deficiency motivation (D-motivation) applies to all four lower-level needs. Self-actualization alone is growth motivation (B-motivation)."
+  },
+  {
+    id:27,section:'A',
+    text:"The overjustification effect (Deci and Ryan's Self-Determination Theory) occurs when:",
+    opts:["Extrinsic rewards increase intrinsic motivation for an enjoyable activity","External rewards for an intrinsically interesting activity decrease subsequent intrinsic motivation","Individuals attribute their behaviour to internal rather than external causes","Task complexity exceeds the individual's intrinsic motivational capacity"],
+    answer:1,
+    just:"Overjustification effect: adding extrinsic rewards to an intrinsically enjoyable task reduces subsequent intrinsic motivation — Deci's key finding."
+  },
+  {
+    id:28,section:'A',
+    text:"The Cannon-Bard theory of emotion differs from the James-Lange theory in proposing that:",
+    opts:["Physiological arousal precedes and causes emotional experience","Cognitive appraisal is the primary determinant of emotion","Physiological changes and emotional experiences occur simultaneously and independently","The thalamus routes emotional stimuli to the cortex before the body responds"],
+    answer:2,
+    just:"Cannon-Bard: physiological arousal and emotional experience are simultaneous and independent. James-Lange: body responds first, then emotion is felt."
+  },
+  {
+    id:29,section:'A',
+    text:"According to Schachter and Singer's Two-Factor Theory, emotion is determined by:",
+    opts:["The specific pattern of physiological arousal unique to each emotion","General physiological arousal + cognitive label applied to that arousal","Unconscious appraisal of environmental stimuli by the amygdala","Direct conditioning of emotional responses to neutral stimuli"],
+    answer:1,
+    just:"Schachter-Singer: general physiological arousal + cognitive label applied to it = specific emotion. Demonstrated with epinephrine injection study."
+  },
+  {
+    id:30,section:'A',
+    text:"According to Freud, the reality principle governs the functioning of:",
+    opts:["The id","The superego","The ego","The preconscious"],
+    answer:2,
+    just:"The ego operates on the reality principle, mediating between the id's pleasure demands and the superego's moral standards."
+  },
+  {
+    id:31,section:'A',
+    text:"Reaction formation as a defence mechanism involves:",
+    opts:["Attributing one's own unacceptable impulses to others","Converting anxiety into physical symptoms","Behaving in a manner directly opposite to one's true unconscious feelings","Reverting to an earlier stage of development under stress"],
+    answer:2,
+    just:"Reaction formation = expressing the DIRECT OPPOSITE of true unconscious feelings. Often confused with projection (attributing to others = Option A)."
+  },
+  {
+    id:32,section:'A',
+    text:"McCrae and Costa's Five-Factor Model (Big Five) includes which of the following as a dimension?",
+    opts:["Dominance","Psychoticism","Neuroticism","Introversion-Extraversion as a separate dimension from the Big Five"],
+    answer:2,
+    just:"Big Five (OCEAN): Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism. Psychoticism is from Eysenck's three-factor model."
+  },
+  {
+    id:33,section:'A',
+    text:"Carl Rogers' concept of unconditional positive regard is central to which therapeutic approach?",
+    opts:["Psychoanalysis","Person-centred therapy","Rational Emotive Behaviour Therapy","Gestalt therapy"],
+    answer:1,
+    just:"Unconditional positive regard is one of Rogers' three core conditions in person-centred (client-centred) therapy."
+  },
+  {
+    id:34,section:'A',
+    text:"Bandura's concept of self-efficacy differs from self-esteem in that self-efficacy:",
+    opts:["Is a global evaluation of one's overall worth","Refers to domain-specific beliefs about one's capability to execute behaviours","Is determined entirely by past reinforcement history","Is stable across all situations and tasks"],
+    answer:1,
+    just:"Self-efficacy = task/domain-specific belief in capability. Self-esteem = global self-worth. Bandura's key distinction."
+  },
+  {
+    id:35,section:'A',
+    text:"Cognitive dissonance (Festinger) is most likely to produce attitude change when:",
+    opts:["The behaviour was coerced by external pressure","The inconsistent behaviour was freely chosen and had real consequences","The individual has low self-esteem and high need for approval","The attitude was formed recently and lacks emotional investment"],
+    answer:1,
+    just:"Dissonance is greatest when behaviour was freely chosen with real consequences — removing external justification makes internal change necessary."
+  },
+  {
+    id:36,section:'A',
+    text:"In Asch's conformity experiments, the variable that MOST significantly reduced conformity was:",
+    opts:["Increasing the majority from 3 to 15 members","Making the stimulus lines more similar in length","Having even one other participant give the correct answer (social support)","Reducing the participant's familiarity with line-length judgements"],
+    answer:2,
+    just:"Asch: having just ONE ally who gave the correct answer dramatically reduced conformity — social support breaks unanimous majority pressure."
+  },
+  {
+    id:37,section:'A',
+    text:"In Milgram's obedience studies, the factor that produced the GREATEST reduction in obedience rates was:",
+    opts:["Being told the learner had a heart condition","Moving the experimenter to another room (remote authority)","Moving the learner into the same room as the teacher (victim proximity)","Having two confederates rebel and refuse to continue"],
+    answer:3,
+    just:"Biggest trap: Students say 'remote authority' but two rebellious confederate peers produced the greatest reduction in obedience (~10% compliance)."
+  },
+  {
+    id:38,section:'A',
+    text:"The fundamental attribution error refers to the tendency to:",
+    opts:["Overestimate situational factors and underestimate dispositional factors in explaining others' behaviour","Overestimate dispositional factors and underestimate situational factors in explaining others' behaviour","Attribute one's own failures to external causes while attributing successes to internal causes","Apply different attribution standards to in-group versus out-group members"],
+    answer:1,
+    just:"FAE = overestimate dispositional (internal/personality) factors, underestimate situational factors when explaining OTHERS' behaviour."
+  },
+  {
+    id:39,section:'A',
+    text:"Social identity theory (Tajfel & Turner) explains prejudice primarily through:",
+    opts:["Realistic conflict over limited resources between groups","Authoritarian personality traits developed in childhood","In-group favouritism arising from the need to maintain positive social identity","Classical conditioning of negative attitudes toward out-groups"],
+    answer:2,
+    just:"Social identity theory: people favour in-groups to maintain positive self-concept derived from group membership (Tajfel)."
+  },
+  {
+    id:40,section:'A',
+    text:"Which of the following BEST illustrates the 'social' component of the biopsychosocial model contributing to a psychological disorder?",
+    opts:["A genetic predisposition to depression","Dysfunctional cognitive schemas about the self","Lack of social support and chronic interpersonal conflict","Elevated cortisol levels due to chronic stress"],
+    answer:2,
+    just:"Social component = social support, relationships, socioeconomic factors. Cortisol = biological; cognitive schemas = psychological."
+  },
+  {
+    id:41,section:'A',
+    text:"Which of the following CORRECTLY differentiates Generalized Anxiety Disorder (GAD) from other anxiety disorders?",
+    opts:["GAD involves sudden, intense surges of fear focused on a specific trigger","GAD involves persistent, uncontrollable worry about multiple life areas lasting at least 6 months","GAD is characterised by avoidance of social situations due to fear of negative evaluation","GAD involves intrusive thoughts and compulsive behaviours to neutralize anxiety"],
+    answer:1,
+    just:"GAD hallmark: excessive, uncontrollable worry about multiple life areas for ≥6 months. Option A = panic; C = social anxiety; D = OCD."
+  },
+  {
+    id:42,section:'A',
+    text:"A patient has experienced 3 episodes of major depression and 1 hypomanic episode. The MOST appropriate DSM diagnosis would be:",
+    opts:["Major Depressive Disorder, recurrent","Bipolar I Disorder","Bipolar II Disorder","Cyclothymic Disorder"],
+    answer:2,
+    just:"Hypomanic (not full manic) episodes + MDD = Bipolar II. Full manic episode = Bipolar I. Frequently tested and confused."
+  },
+  {
+    id:43,section:'A',
+    text:"According to the dopamine hypothesis of schizophrenia, which statement is MOST accurate?",
+    opts:["Schizophrenia results exclusively from excess dopamine activity across all brain regions","Positive symptoms are linked to excess dopamine in mesolimbic pathways; negative symptoms may involve reduced prefrontal dopamine","Antipsychotics work by blocking serotonin receptors to reduce dopamine synthesis","Low dopamine in the mesolimbic system produces hallucinations and delusions"],
+    answer:1,
+    just:"Revised dopamine hypothesis: EXCESS dopamine in mesolimbic = positive symptoms; REDUCED dopamine in prefrontal cortex = negative/cognitive symptoms."
+  },
+  {
+    id:44,section:'A',
+    text:"Systematic desensitization (Wolpe) is based on the principle of:",
+    opts:["Operant extinction of maladaptive behaviours","Reciprocal inhibition — pairing relaxation with anxiety-provoking stimuli","Modelling adaptive behaviours through vicarious reinforcement","Cognitive restructuring of irrational beliefs"],
+    answer:1,
+    just:"Systematic desensitization: reciprocal inhibition (Wolpe) — relaxation response is incompatible with and inhibits anxiety when progressively paired with feared stimuli."
+  },
+  {
+    id:45,section:'A',
+    text:"Which of the following BEST describes the mechanism of action of SSRIs in treating depression?",
+    opts:["They block dopamine reuptake in the mesolimbic system","They inhibit monoamine oxidase, preventing serotonin breakdown","They block the reuptake of serotonin, increasing its synaptic availability","They act on GABA receptors to reduce anxiety-related neural activity"],
+    answer:2,
+    just:"SSRIs block the serotonin reuptake transporter (SERT), increasing serotonin availability in the synapse. MAOIs = Option B."
+  },
+  {
+    id:46,section:'A',
+    text:"Selye's General Adaptation Syndrome (GAS) describes the body's response to prolonged stress. The correct sequential order is:",
+    opts:["Resistance → Alarm → Exhaustion","Alarm → Exhaustion → Resistance","Alarm → Resistance → Exhaustion","Exhaustion → Alarm → Resistance"],
+    answer:2,
+    just:"Selye's GAS sequence: Alarm → Resistance → Exhaustion. Must be memorized exactly."
+  },
+  {
+    id:47,section:'A',
+    text:"Emotion-focused coping is MOST adaptive when:",
+    opts:["The stressor is within the individual's control and can be modified","The individual has high problem-solving skills and external resources","The stressor is uncontrollable and cannot be directly changed","The individual uses denial as a primary coping strategy"],
+    answer:2,
+    just:"Emotion-focused coping is adaptive when the stressor is uncontrollable (e.g., bereavement, terminal illness). Problem-focused = better for controllable stressors."
+  },
+  {
+    id:48,section:'B',
+    type:'match',
+    text:"Match the learning theorists with their key contributions:",
+    colA:["i. Latent learning demonstrated via cognitive maps","ii. Law of Effect — satisfying outcomes strengthen S-R bonds","iii. Vicarious reinforcement in observational learning","iv. Conditioned emotional response ('Little Albert')"],
+    colB:["a. Thorndike","b. Bandura","c. Tolman","d. Watson & Rayner"],
+    opts:["i-c, ii-a, iii-b, iv-d","i-b, ii-c, iii-d, iv-a","i-c, ii-d, iii-a, iv-b","i-a, ii-c, iii-b, iv-d"],
+    answer:0,
+    just:"i-c (Tolman: latent learning/cognitive maps), ii-a (Thorndike: Law of Effect), iii-b (Bandura: vicarious reinforcement), iv-d (Watson & Rayner: Little Albert)."
+  },
+  {
+    id:49,section:'B',
+    type:'match',
+    text:"Match each memory type with its example or key feature:",
+    colA:["i. Episodic memory","ii. Semantic memory","iii. Procedural memory","iv. Prospective memory"],
+    colB:["a. Knowing how to ride a bicycle","b. Memory of your first day of college","c. General factual knowledge — capital of India","d. Remembering to take medicine tomorrow morning"],
+    opts:["i-b, ii-c, iii-a, iv-d","i-c, ii-b, iii-d, iv-a","i-a, ii-d, iii-b, iv-c","i-b, ii-d, iii-c, iv-a"],
+    answer:0,
+    just:"i-b (episodic = personal events), ii-c (semantic = general facts), iii-a (procedural = motor skills), iv-d (prospective = future intentions)."
+  },
+  {
+    id:50,section:'B',
+    type:'match',
+    text:"Match each defence mechanism with its description:",
+    colA:["i. Displacement","ii. Sublimation","iii. Projection","iv. Intellectualization"],
+    colB:["a. Attributing one's own unacceptable motives to another person","b. Redirecting impulses toward a less threatening substitute target","c. Channelling unacceptable impulses into socially acceptable activities","d. Using abstract reasoning to detach from emotional content of a conflict"],
+    opts:["i-c, ii-b, iii-a, iv-d","i-b, ii-c, iii-a, iv-d","i-a, ii-d, iii-c, iv-b","i-b, ii-a, iii-d, iv-c"],
+    answer:1,
+    just:"i-b (displacement = substitute target), ii-c (sublimation = socially acceptable outlet), iii-a (projection = attributing to others), iv-d (intellectualization = abstract detachment)."
+  }
+];
+
+let currentQ = 0;
+let userAnswers = new Array(50).fill(null);
+let timerInterval = null;
+let secondsLeft = 60 * 60;
+let testStarted = false;
+
+function startTest() {
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('test').style.display = 'block';
+  testStarted = true;
+  renderQuestion(0);
+  renderGrid();
+  startTimer();
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) { clearInterval(timerInterval); finalSubmit(); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  const t = document.getElementById('timer');
+  t.textContent = '⏱ ' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  t.className = 'timer';
+  if (secondsLeft <= 300) t.className = 'timer danger';
+  else if (secondsLeft <= 600) t.className = 'timer warning';
+}
+
+function renderQuestion(idx) {
+  currentQ = idx;
+  const q = QUESTIONS[idx];
+  const panel = document.getElementById('mainPanel');
+  let html = '';
+
+  const sectionLabel = q.section === 'B' ? 'Section B — Match the Following' : 'Section A — Multiple Choice Questions';
+  html += `<div class="section-label">${sectionLabel}</div>`;
+  html += `<div class="q-counter">Question <span>${idx+1}</span> of <span>50</span></div>`;
+
+  if (q.type === 'match') {
+    html += `<div class="q-text"><span class="q-num">${q.id}</span>${q.text}</div>`;
+    html += `<table class="match-table"><thead><tr><th>Column A</th><th>Column B</th></tr></thead><tbody>`;
+    for (let i = 0; i < q.colA.length; i++) {
+      html += `<tr><td>${q.colA[i]}</td><td>${q.colB[i]}</td></tr>`;
+    }
+    html += `</tbody></table>`;
+    html += `<ul class="options-list">`;
+    q.opts.forEach((opt, i) => {
+      const sel = userAnswers[idx] === i ? ' selected' : '';
+      html += `<li class="option-item${sel}" onclick="selectAnswer(${idx},${i})">
+        <label><span class="opt-letter">${['A','B','C','D'][i]}</span>${opt}</label>
+      </li>`;
+    });
+    html += `</ul>`;
+  } else {
+    html += `<div class="q-text"><span class="q-num">${q.id}</span>${q.text}</div>`;
+    html += `<ul class="options-list">`;
+    q.opts.forEach((opt, i) => {
+      const sel = userAnswers[idx] === i ? ' selected' : '';
+      html += `<li class="option-item${sel}" onclick="selectAnswer(${idx},${i})">
+        <label><span class="opt-letter">${['A','B','C','D'][i]}</span>${opt}</label>
+      </li>`;
+    });
+    html += `</ul>`;
+  }
+
+  html += `<div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goTo(${idx-1})" ${idx===0?'disabled':''}>← Previous</button>
+    <button class="btn btn-outline" onclick="clearAnswer(${idx})">Clear</button>
+    ${idx < 49 ? `<button class="btn btn-primary" onclick="goTo(${idx+1})">Next →</button>` : ''}
+    <button class="btn btn-danger" onclick="openConfirm()">Submit Test</button>
+  </div>`;
+
+  panel.innerHTML = html;
+  updateProgress();
+  renderGrid();
+}
+
+function selectAnswer(qIdx, optIdx) {
+  userAnswers[qIdx] = optIdx;
+  renderQuestion(qIdx);
+}
+
+function clearAnswer(qIdx) {
+  userAnswers[qIdx] = null;
+  renderQuestion(qIdx);
+}
+
+function goTo(idx) {
+  if (idx < 0 || idx > 49) return;
+  renderQuestion(idx);
+}
+
+function renderGrid() {
+  const grid = document.getElementById('qGrid');
+  let html = '';
+  for (let i = 0; i < 50; i++) {
+    let cls = 'q-dot';
+    if (userAnswers[i] !== null) cls += ' answered';
+    if (i === currentQ) cls += ' current';
+    html += `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+  }
+  grid.innerHTML = html;
+  const ans = userAnswers.filter(a => a !== null).length;
+  document.getElementById('sAnswered').textContent = ans;
+  document.getElementById('sRemaining').textContent = 50 - ans;
+}
+
+function updateProgress() {
+  const pct = ((currentQ + 1) / 50) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function openConfirm() {
+  const unanswered = userAnswers.filter(a => a === null).length;
+  document.getElementById('confirmMsg').textContent =
+    unanswered > 0
+      ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit?`
+      : 'All questions answered. Ready to submit?';
+  document.getElementById('confirmModal').classList.add('active');
+}
+
+function closeConfirm() {
+  document.getElementById('confirmModal').classList.remove('active');
+}
+
+function finalSubmit() {
+  clearInterval(timerInterval);
+  closeConfirm();
+  document.getElementById('test').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  renderResults();
+}
+
+function renderResults() {
+  let correct = 0, wrong = 0, skipped = 0;
+  QUESTIONS.forEach((q, i) => {
+    if (userAnswers[i] === null) skipped++;
+    else if (userAnswers[i] === q.answer) correct++;
+    else wrong++;
+  });
+  const pct = Math.round((correct / 50) * 100);
+  let band = '', badgeCls = '';
+  if (pct >= 86) { band = 'Excellent'; badgeCls = 'badge-excellent'; }
+  else if (pct >= 70) { band = 'Good'; badgeCls = 'badge-good'; }
+  else if (pct >= 50) { band = 'Average'; badgeCls = 'badge-average'; }
+  else { band = 'Needs Work'; badgeCls = 'badge-poor'; }
+
+  let html = `
+  <div class="results-hero">
+    <div class="result-badge ${badgeCls}">${band}</div>
+    <div class="score-big">${correct}<span style="font-size:1.5rem;opacity:0.6"> / 50</span></div>
+    <div class="score-sub">${pct}% · Foundational Psychology Mock Test</div>
+    <div class="score-grid">
+      <div class="score-item"><div class="score-item-val green">${correct}</div><div class="score-item-lbl">Correct</div></div>
+      <div class="score-item"><div class="score-item-val red">${wrong}</div><div class="score-item-lbl">Wrong</div></div>
+      <div class="score-item"><div class="score-item-val yellow">${skipped}</div><div class="score-item-lbl">Skipped</div></div>
+    </div>
+  </div>`;
+
+  const bandMsg = {
+    'Excellent': 'Outstanding performance — NIMHANS-ready range. Review any wrong answers carefully and continue refining conceptual depth.',
+    'Good': 'Strong foundation. Target the questions you got wrong — identify exactly which concept tripped you up and revise from Ciccarelli.',
+    'Average': 'Solid start, but systematic revision is needed. Go chapter-by-chapter through Ciccarelli, focusing on areas with the most errors below.',
+    'Needs Work': 'Return to Ciccarelli and revise each chapter thoroughly before retesting. Focus on understanding over memorization.'
+  };
+
+  html += `<div class="section-card"><div class="section-card-header">Evaluator Feedback</div>
+  <div style="padding:1.2rem 1.5rem;font-size:14px;line-height:1.7;color:var(--text-muted)">${bandMsg[band]}</div></div>`;
+
+  html += `<div class="section-card"><div class="section-card-header">Detailed Answer Review</div><div class="review-list">`;
+
+  QUESTIONS.forEach((q, i) => {
+    const ua = userAnswers[i];
+    let icon, numCls, ansHtml;
+    if (ua === null) {
+      icon = '—'; numCls = 'skip-bg';
+      ansHtml = `<div class="review-answers"><span class="skipped">Not attempted</span> · <span class="correct-ans">Correct: ${['A','B','C','D'][q.answer]}) ${q.opts[q.answer]}</span></div>`;
+    } else if (ua === q.answer) {
+      icon = '✓'; numCls = 'correct-bg';
+      ansHtml = `<div class="review-answers"><span class="your-ans correct">Your answer: ${['A','B','C','D'][ua]}) ${q.opts[ua]}</span></div>`;
+    } else {
+      icon = '✗'; numCls = 'wrong-bg';
+      ansHtml = `<div class="review-answers">
+        <span class="your-ans">Your answer: ${['A','B','C','D'][ua]}) ${q.opts[ua]}</span><br>
+        <span class="correct-ans">Correct: ${['A','B','C','D'][q.answer]}) ${q.opts[q.answer]}</span>
+      </div>`;
+    }
+
+    html += `<div class="review-item">
+      <div class="review-num ${numCls}">${icon}</div>
+      <div>
+        <div class="review-q"><strong>Q${q.id}.</strong> ${q.text}</div>
+        ${ansHtml}
+        <div class="review-just">${q.just}</div>
+      </div>
+    </div>`;
+  });
+
+  html += `</div></div>`;
+  html += `<button class="retry-btn" onclick="retryTest()">Restart Test</button>`;
+
+  document.getElementById('resultsWrap').innerHTML = html;
+  window.scrollTo(0,0);
+}
+
+function retryTest() {
+  userAnswers = new Array(50).fill(null);
+  currentQ = 0;
+  secondsLeft = 60 * 60;
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('welcome').style.display = 'flex';
+}
+</script>
 </body>
 </html>
